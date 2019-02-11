@@ -1,0 +1,14 @@
+{
+  "name": "event-pipeline",
+  "description": "",
+  "version": "0.1.0",
+  "dependencies": {
+    "serverless-plugin-existing-s3": "^2.3.0"
+  },
+  "devDependencies": {
+    "serverless": "^1.36.0",
+    "serverless-plugin-tracing": "^2.0.0",
+    "serverless-pseudo-parameters": "^2.4.0",
+    "serverless-python-requirements": "^4.2.5"
+  }
+}

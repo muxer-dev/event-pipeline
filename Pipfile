@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+aws-xray-sdk = "*"
+boto3 = "*"
+jsonschema = "*"
+jsonpointer = "*"
+
+[dev-packages]
+pytest = "==4.0.1"
+pytest-black = "*"
+pytest-cov = "*"
+pytest-flakes = "*"
+pytest-mccabe = "*"
+"pytest-pep8" = "*"
+pytest-pythonpath = "*"
+pytest-responses = "*"
+
+[requires]
+python_version = "3.7"

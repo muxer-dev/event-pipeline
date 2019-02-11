@@ -1,0 +1,9 @@
+# Docker whitelist
+
+!lib
+!tests
+!Pipfile
+!Pipfile.lock
+!pytest.ini
+!package.json
+!package-lock.json

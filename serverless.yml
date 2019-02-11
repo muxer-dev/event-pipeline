@@ -1,0 +1,129 @@
+service: event-pipeline
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: ${self:custom.stage}
+  region: 'eu-west-1'
+  profile: personal
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "s3:ListBucket"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - Ref: ServerlessDeploymentBucket
+    -  Effect: "Allow"
+       Action:
+         - "s3:PutObject"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - Ref: ServerlessDeploymentBucket
+             - "/*"
+    -  Effect: "Allow"
+       Action: "states:*"
+       Resource: "*"
+    -  Effect: "Allow"
+       Action:
+         - "s3:PutBucketNotification"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "*"
+
+# you can define service wide environment variables here
+#  environment:
+#    variable1: value1
+
+# you can add packaging information here
+package:
+ include:
+   - "handlers.py"
+   - "lib/**/*.py"
+   - "bin/*"
+ exclude:
+   - ".*/**"
+
+
+functions:
+  trigger:
+    handler: lib/trigger.handle
+  validate:
+    handler: lib/validate.handle
+  Extract:
+    handler: lib/Extract.handle
+  transform:
+    handler: lib/transform.handle
+  Load:
+    handler: lib/Load.handle
+
+
+resources:
+  Resources:
+
+    StatesExecutionRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service: "states.#{AWS::Region}.amazonaws.com"
+              Action: "sts:AssumeRole"
+        Path: "/"
+        Policies:
+          - PolicyName: StatesExecutionPolicy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - "lambda:InvokeFunction"
+                  Resource: "*"
+
+    EventPipelineStateMachine:
+      Type: "AWS::StepFunctions::StateMachine"
+      Properties:
+        DefinitionString: |-
+          {
+            "StartAt": "Extract",
+            "Version": "1.0",
+            "States": {
+              "Extract": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:sls-event-pipeline-lambda-${self:custom.stage}-Extract",
+                "Next": "Transform"
+              },
+              "Transform": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:sls-event-pipeline-lambda-${self:custom.stage}-transform",
+                "Next": "Load"
+              },
+              "Load": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:sls-event-pipeline-lambda-${self:custom.stage}-Load",
+                "End": true
+              }
+            }
+          }
+        RoleArn: !GetAtt [ StatesExecutionRole, Arn ]
+
+
+
+plugins:
+  - serverless-python-requirements
+  - serverless-plugin-tracing
+  - serverless-pseudo-parameters
+  - serverless-plugin-existing-s3
+
+custom:
+  stage: ${opt:stage, 'dev'}
+  pythonRequirements:
+    dockerizePip: non-linux
+    pipCmdExtraArgs:
+      - --no-compile
