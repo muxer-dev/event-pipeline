@@ -6,8 +6,13 @@ verify_ssl = true
 [packages]
 aws-xray-sdk = "*"
 boto3 = "*"
+eventbrite = "*"
 jsonschema = "*"
 jsonpointer = "*"
+meetup-api = "*"
+pygithub = "*"
+python-json-logger = "*"
+requests = "*"
 
 [dev-packages]
 pytest = "==4.0.1"
