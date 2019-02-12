@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 
 services:
 
@@ -9,8 +9,7 @@ services:
       - AWS_ENVIRONMENT=staging
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-eu-west-1}
       - AWS_ACCESS_KEY_ID=test
-      - AWS_SECRET_ACCESS_KEY=test
-      - LOG_LEVEL=DEBUG
+      - AWS_SECRET_ACCESS_KEY=test.com
     command: >
       py.test --pep8
               --ignore=W503

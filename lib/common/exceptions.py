@@ -1,2 +1,0 @@
-class InvalidLogLevelName(Exception):
-    pass
