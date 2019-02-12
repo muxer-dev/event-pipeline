@@ -42,7 +42,7 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 People *love* thorough bug reports. I'm not even kidding.
 
 ## Use a Consistent Coding Style
-We use Prettier to format all JavaScript code and Black to format all Python code.
+We use [Prettier](https://prettier.io/) to format all JavaScript code and [Black](https://github.com/ambv/black) to format all Python code.
 
 ## License
 By contributing, you agree that your contributions will be licensed under its MIT License.
