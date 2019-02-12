@@ -10,7 +10,6 @@ def test_extract():
         "message": "Your extract function executed successfully!",
         "data": event,
     }
-
     expected_result = {"statusCode": 200, "body": expected_body}
 
     result = extract.handle(event, [])
