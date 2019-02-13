@@ -1,16 +1,28 @@
-# local imports
+from mock import patch
+
 from lib import extract
 
 
-def test_extract():
-    data = {}
-    event = {"data": [data]}
+@patch("lib.extract.meetup.get_events_by_member")
+def test_extract(mock_meetup):
+    mock_meetup.return_value = [{"example": "data"}]
 
-    expected_body = {
-        "message": "Your extract function executed successfully!",
-        "data": event,
+    event = {
+        "sources": [
+            {
+                "location": "belfast",
+                "endpoint": "https://muxer.co.uk/events",
+                "type": "meetup",
+                "meetup": {"member_id": 123123},
+            }
+        ]
     }
-    expected_result = {"statusCode": 200, "body": expected_body}
+    expected_result = {
+        "data": [
+            {"events": [{"example": "data"}], "type": "meetup", "location": "belfast"}
+        ]
+    }
 
     result = extract.handle(event, [])
+
     assert result == expected_result
