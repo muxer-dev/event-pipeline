@@ -1,7 +1,7 @@
 from jsonpointer import resolve_pointer as resolve
 
 from common.logger import logger
-from lib.sources import meetup
+from sources import meetup
 
 
 def handle(event, context):
