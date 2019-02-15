@@ -13,6 +13,7 @@ meetup-api = "*"
 pygithub = "*"
 python-json-logger = "*"
 requests = "*"
+mock = "*"
 
 [dev-packages]
 pytest = "==4.0.1"
