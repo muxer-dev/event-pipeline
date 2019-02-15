@@ -20,4 +20,5 @@ RUN npm install
 COPY Pipfile Pipfile.lock ./
 RUN pipenv install --deploy --dev --ignore-pipfile --system
 
+COPY /src/ .
 COPY . .

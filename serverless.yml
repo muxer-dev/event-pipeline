@@ -43,7 +43,7 @@ provider:
 package:
  include:
    - "handlers.py"
-   - "lib/**/*.py"
+   - "src/**/*.py"
    - "bin/*"
  exclude:
    - ".*/**"
@@ -51,13 +51,13 @@ package:
 
 functions:
   extract:
-    handler: lib/extract.handle
+    handler: src/extract.handle
     environment:
       MEETUP_API_TOKEN: ${ssm:meetupApiToken}
   transform:
-    handler: lib/transform.handle
+    handler: src/transform.handle
   load:
-    handler: lib/load.handle
+    handler: src/load.handle
 
 
 resources:

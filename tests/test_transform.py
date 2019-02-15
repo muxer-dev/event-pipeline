@@ -1,5 +1,5 @@
 # local imports
-from lib import transform
+from src import transform
 
 
 def test_transform():
