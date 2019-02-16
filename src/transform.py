@@ -22,10 +22,8 @@ def handle(event, context):
             transform = SUPPORTED_TYPES.get(type)
 
             events = transform(events, location)
-            payload = {
-                "data": [{"events": events, "type": "meetup", "location": "belfast"}]
-            }
+            payload = {"events": events, "type": "meetup", "location": "belfast"}
 
             transformed_events.append(payload)
 
-    return transformed_events
+    return {"data": transformed_events}

@@ -1,16 +1,26 @@
-# local imports
+from mock import patch
+
+from fixtures.transformed import MEETUP_TRANSFORMED_EVENT
 from src import load
 
 
-def test_load():
-    data = {}
-    event = {"data": [data]}
+@patch("src.load.requests.post")
+def test_load(mock_post):
+    mock_post.return_value.ok = True
+    mock_post.return_value.status_code = 200
 
-    expected_body = {
-        "message": "Your load function executed successfully!",
-        "data": event,
+    event = {
+        "sources": [
+            {
+                "events": [MEETUP_TRANSFORMED_EVENT],
+                "type": "meetup",
+                "location": "belfast",
+            }
+        ]
     }
-    expected_result = {"statusCode": 200, "body": expected_body}
 
     result = load.handle(event, [])
+
+    expected_result = {"responses": [{"success": 1, "failure": 0}]}
+
     assert result == expected_result

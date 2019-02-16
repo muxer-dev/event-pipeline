@@ -1,8 +1,7 @@
 from mock import patch
 
-from src import extract
-
 from fixtures.payloads import MEETUP_EVENT
+from src import extract
 
 
 @patch("src.extract.meetup.get_events_by_member")
