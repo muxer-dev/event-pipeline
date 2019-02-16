@@ -1,7 +1,6 @@
 # Docker whitelist
 
-!common
-!lib
+!src
 !tests
 !Pipfile
 !Pipfile.lock

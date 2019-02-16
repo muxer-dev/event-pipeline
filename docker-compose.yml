@@ -16,7 +16,7 @@ services:
               --black
               --flakes
               --mccabe
-              --cov=lib
+              --cov=src
               --cov-report=term-missing
               --junitxml=/tmp/test-results.xml
               -vv

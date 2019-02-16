@@ -1,5 +1,5 @@
 # local imports
-from lib import load
+from src import load
 
 
 def test_load():

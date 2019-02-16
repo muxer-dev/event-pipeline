@@ -1,4 +1,4 @@
-from common.logger import logger
+from src.common.logger import logger
 
 
 def handle(event, context):
