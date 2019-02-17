@@ -1,7 +1,6 @@
 from jsonpointer import resolve_pointer as resolve
 
 from common.logger import logger
-
 from transformers.meetup import transform_meetup
 
 SUPPORTED_TYPES = {"meetup": transform_meetup}

@@ -1,5 +1,6 @@
 from mock import patch
 
+from fixtures.extracted import MEETUP_EXTRACTED_EVENTS
 from fixtures.payloads import MEETUP_EVENT
 from src import extract
 
@@ -18,9 +19,7 @@ def test_extract(mock_meetup):
             }
         ]
     }
-    expected_result = {
-        "data": [{"events": [MEETUP_EVENT], "type": "meetup", "location": "belfast"}]
-    }
+    expected_result = MEETUP_EXTRACTED_EVENTS
 
     result = extract.handle(event, [])
 

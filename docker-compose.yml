@@ -28,5 +28,5 @@ services:
       - AWS_ENVIRONMENT=staging
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
-      # - SLS_DEBUG=*
+      - SLS_DEBUG
     command: sls deploy --region-eu-west-1
