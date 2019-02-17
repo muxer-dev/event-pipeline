@@ -20,3 +20,13 @@ services:
               --cov-report=term-missing
               --junitxml=/tmp/test-results.xml
               -vv
+
+  deploy:
+    container_name: pipeline-deploy
+    build: .
+    environment:
+      - AWS_ENVIRONMENT=staging
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      # - SLS_DEBUG=*
+    command: sls deploy --region-eu-west-1

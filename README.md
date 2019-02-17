@@ -26,3 +26,12 @@ aws ssm get-parameters --region=eu-west-1 --name meetupApiToken --profile=muxer
 ```sh
 sls deploy --aws-profile=muxer --region-eu-west-1
 ```
+
+### Deploy
+
+```sh
+export AWS_ACCESS_KEY_ID=$(aws --profile muxer configure get aws_access_key_id)
+export AWS_SECRET_ACCESS_KEY=$(aws --profile muxer configure get aws_secret_access_key)
+
+docker-compose build deploy && docker-compose run deploy
+```

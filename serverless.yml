@@ -5,7 +5,6 @@ provider:
   runtime: python3.7
   stage: ${self:custom.stage}
   region: 'eu-west-1'
-  profile: personal
   iamRoleStatements:
     -  Effect: "Allow"
        Action:
@@ -52,12 +51,17 @@ package:
 functions:
   extract:
     handler: src/extract.handle
+    timeout: 30
     environment:
       MEETUP_API_TOKEN: ${ssm:meetupApiToken}
   transform:
     handler: src/transform.handle
+    timeout: 30
   load:
     handler: src/load.handle
+    timeout: 30
+    environment:
+      EVENTS_ENDPOINT: https://muxer.co.uk
 
 
 resources:
@@ -94,17 +98,17 @@ resources:
             "States": {
               "Extract": {
                 "Type": "Task",
-                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:sls-event-pipeline-lambda-${self:custom.stage}-extract",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:event-pipeline-${self:custom.stage}-extract",
                 "Next": "Transform"
               },
               "Transform": {
                 "Type": "Task",
-                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:sls-event-pipeline-lambda-${self:custom.stage}-transform",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:event-pipeline-${self:custom.stage}-transform",
                 "Next": "Load"
               },
               "Load": {
                 "Type": "Task",
-                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:sls-event-pipeline-lambda-${self:custom.stage}-load",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:event-pipeline-${self:custom.stage}-load",
                 "End": true
               }
             }
