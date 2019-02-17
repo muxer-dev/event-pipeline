@@ -54,6 +54,7 @@ functions:
     timeout: 30
     environment:
       MEETUP_API_TOKEN: ${ssm:meetupApiToken}
+      EXTRACT_BUCKET: events-pipeline-extract
   transform:
     handler: src/transform.handle
     timeout: 30
