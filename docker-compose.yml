@@ -10,6 +10,7 @@ services:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-eu-west-1}
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test.com
+      - EXTRACT_BUCKET=events-pipeline-extract
     command: >
       py.test --pep8
               --ignore=W503
@@ -20,6 +21,7 @@ services:
               --cov-report=term-missing
               --junitxml=/tmp/test-results.xml
               -vv
+              tests/test_extract.py
 
   deploy:
     container_name: pipeline-deploy
