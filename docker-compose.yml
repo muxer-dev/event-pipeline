@@ -11,6 +11,7 @@ services:
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test.com
       - EXTRACT_BUCKET=events-pipeline-extract
+      - TRANSFORM_BUCKET=events-pipeline-transform
     command: >
       py.test --pep8
               --ignore=W503
