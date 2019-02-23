@@ -24,6 +24,24 @@ provider:
              - Ref: ServerlessDeploymentBucket
              - "/*"
     -  Effect: "Allow"
+       Action:
+         - "s3:*"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - Ref: EventsPipelineExtractBucket
+             - "/*"
+    -  Effect: "Allow"
+       Action:
+         - "s3:*"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - Ref: EventsPipelineTransformBucket
+             - "/*"
+    -  Effect: "Allow"
        Action: "states:*"
        Resource: "*"
     -  Effect: "Allow"
@@ -58,15 +76,27 @@ functions:
   transform:
     handler: src/transform.handle
     timeout: 30
+    environment:
+      TRANSFORM_BUCKET: events-pipeline-transform
   load:
     handler: src/load.handle
-    timeout: 30
+    timeout: 900
     environment:
-      EVENTS_ENDPOINT: https://muxer.co.uk
+      EVENTS_ENDPOINT: https://muxer.co.uk/events
 
 
 resources:
   Resources:
+
+    EventsPipelineExtractBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: events-pipeline-extract
+
+    EventsPipelineTransformBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: events-pipeline-transform
 
     StatesExecutionRole:
       Type: "AWS::IAM::Role"
@@ -122,7 +152,6 @@ plugins:
   - serverless-python-requirements
   - serverless-plugin-tracing
   - serverless-pseudo-parameters
-  - serverless-plugin-existing-s3
 
 custom:
   stage: ${opt:stage, 'dev'}

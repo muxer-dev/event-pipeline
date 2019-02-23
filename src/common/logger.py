@@ -26,7 +26,7 @@ import os
 from pythonjsonlogger import jsonlogger
 
 # local imports
-from common.exceptions import InvalidLogLevel
+from src.common.exceptions import InvalidLogLevel
 
 # This is the default pattern aws lambdas use,
 # so all logging information is available in json object.

@@ -1,16 +1,14 @@
-import json
 import os
 
 import boto3
 from jsonpointer import resolve_pointer as resolve
-
-from common.logger import logger
-from sources import meetup
-from util.s3 import upload_to_s3
-
-EXTRACT_BUCKET = os.getenv("EXTRACT_BUCKET")
+from src.common.logger import logger
+from src.sources import meetup
+from src.util.s3 import upload_to_s3
 
 s3 = boto3.client("s3")
+
+EXTRACT_BUCKET = os.getenv("EXTRACT_BUCKET")
 
 
 def retrieved_events(sources):
@@ -37,11 +35,9 @@ def handle(event, context):
     sources = resolve(event, "/sources", [])
     events = retrieved_events(sources)
 
-    # TODO write to s3
     s3_file_path = None
     if events:
-        s3_file_path = upload_to_s3(s3, EXTRACT_BUCKET, events)
+        bucket, key = upload_to_s3(s3, EXTRACT_BUCKET, events)
+        s3_file_path = f"{bucket}/{key}"
 
-    # TODO create file pointer
-
-    return {"pointer": s3_file_path}
+    return {"pointer": s3_file_path, "bucket": bucket, "key": key}
