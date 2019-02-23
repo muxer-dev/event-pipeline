@@ -1,9 +1,8 @@
 import boto3
+from fixtures.payloads import MEETUP_EVENT
 from freezegun import freeze_time
 from mock import patch
 from moto import mock_s3
-
-from fixtures.payloads import MEETUP_EVENT
 from src import extract
 
 EXTRACT_BUCKET = "events-pipeline-extract"

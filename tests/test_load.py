@@ -52,7 +52,6 @@ def test_load(mock_post):
 
         result = load.handle(event, [])
 
-    # expected_result = {"responses": [{"success": 1, "failure": 0}]}
     expected_result = {"responses": []}
 
     assert result == expected_result

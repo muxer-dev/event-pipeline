@@ -2,7 +2,6 @@ import os
 
 import boto3
 from jsonpointer import resolve_pointer as resolve
-
 from src.common.logger import logger
 from src.sources import meetup
 from src.util.s3 import upload_to_s3

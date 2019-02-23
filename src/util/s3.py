@@ -18,9 +18,6 @@ def upload_to_s3(s3, bucket, records):
     if status_code < 200 and status_code >= 300:
         raise Exception("Failed to create file on S3")
 
-<<<<<<< HEAD
-    return f"{bucket}/{key}"
-=======
     return bucket, key
 
 
@@ -29,4 +26,3 @@ def read_from_s3(s3, bucket, key):
     response = json.loads(file_contents)
 
     return response
->>>>>>> e4476bc... Implementing POST step function

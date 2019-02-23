@@ -2,7 +2,6 @@ import os
 
 import boto3
 from jsonpointer import resolve_pointer as resolve
-
 from src.common.logger import logger
 from src.transformers.meetup import transform_meetup
 from src.util.s3 import read_from_s3, upload_to_s3

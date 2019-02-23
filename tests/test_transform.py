@@ -2,7 +2,6 @@ import boto3
 from freezegun import freeze_time
 from mock import patch
 from moto import mock_s3
-
 from src import transform
 
 TRANSFORM_BUCKET = "events-pipeline-transform"
@@ -61,30 +60,6 @@ def test_transform(mock_read, mock_uuid):
         "bucket": "events-pipeline-extract",
         "key": "2019/01/01/00/ff0e7277-1704-42a4-aada-65408c801199.json",
     }
-
-    # expected_result = {
-    #     "data": [
-    #         {
-    #             "events": [
-    #                 {
-    #                     "name": "Workplace Superheroes - With great power comes great responsibility",
-    #                     "description": "<p>Talk/Topic: Workplace Superheroes - With great power comes great </p>",
-    #                     "url": "https://www.meetup.com/DevOps-Belfast/events/257403537/",
-    #                     "start": "2019-02-19 18:30:00Z",
-    #                     "end": "2019-02-19 18:30:00Z",
-    #                     "duration": 10000,
-    #                     "topics": [],
-    #                     "entry": ["free"],
-    #                     "category": "DevOps Belfast",
-    #                     "source": "meetup",
-    #                     "location": "belfast",
-    #                 }
-    #             ],
-    #             "type": "meetup",
-    #             "location": "belfast",
-    #         }
-    #     ]
-    # }
 
     expected_result = {
         "pointer": "events-pipeline-transform/2019/01/01/00/ff0e7277-1704-42a4-aada-65408c801199.json",
