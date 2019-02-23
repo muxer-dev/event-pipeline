@@ -1,7 +1,5 @@
-# stdlib imports
 import boto3
 import pytest
-# third party imports
 from moto import mock_s3
 
 

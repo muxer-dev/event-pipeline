@@ -22,7 +22,6 @@ services:
               --cov-report=term-missing
               --junitxml=/tmp/test-results.xml
               -vv
-              tests/test_extract.py
 
   deploy:
     container_name: pipeline-deploy

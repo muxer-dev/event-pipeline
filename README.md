@@ -1,6 +1,18 @@
 # Event Pipeline
 An implementation of an events state machine using AWS Step Functions and the Serverless framework.
 
+#### Linting
+
+```sh
+black src tests fixtures && isort -rc src tests fixtures
+```
+
+#### Testing
+
+```sh
+docker-compose build test && docker-compose run test
+```
+
 #### Adds secrets to SSM parameter store
 
 Prior to deploying changes you will need to add secret keys to the
