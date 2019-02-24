@@ -72,6 +72,7 @@ functions:
     timeout: 30
     environment:
       MEETUP_API_TOKEN: ${ssm:meetupApiToken}
+      EVENTBRITE_API_TOKEN: ${ssm:eventbriteApiToken}
       EXTRACT_BUCKET: events-pipeline-extract
   transform:
     handler: src/transform.handle

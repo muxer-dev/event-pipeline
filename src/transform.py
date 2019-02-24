@@ -3,10 +3,11 @@ import os
 import boto3
 from jsonpointer import resolve_pointer as resolve
 from src.common.logger import logger
-from src.transformers.meetup import transform_meetup
+from src.transformers.eventbrite import transform as transform_eventbrite
+from src.transformers.meetup import transform as transform_meetup
 from src.util.s3 import read_from_s3, upload_to_s3
 
-SUPPORTED_TYPES = {"meetup": transform_meetup}
+SUPPORTED_TYPES = {"meetup": transform_meetup, "eventbrite": transform_eventbrite}
 
 TRANSFORM_BUCKET = os.getenv("TRANSFORM_BUCKET")
 
