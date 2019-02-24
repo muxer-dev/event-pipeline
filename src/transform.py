@@ -32,7 +32,7 @@ def handle(event, context):
         transform = SUPPORTED_TYPES.get(type)
 
         events = transform(events, location)
-        payload = {"events": events, "type": "meetup", "location": "belfast"}
+        payload = {"events": events, "type": type, "location": location}
 
         transformed_events.append(payload)
 

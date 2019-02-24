@@ -18,14 +18,11 @@ Example:
         }
 """
 
-# stdlib imports
 import logging
 import os
 
-# third-party imports
 from pythonjsonlogger import jsonlogger
 
-# local imports
 from src.common.exceptions import InvalidLogLevel
 
 # This is the default pattern aws lambdas use,
