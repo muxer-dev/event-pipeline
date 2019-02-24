@@ -16,6 +16,7 @@ requests = "*"
 mock = "*"
 freezegun = "*"
 moto = "*"
+pyyaml = "*"
 
 [dev-packages]
 pytest = "==4.0.1"

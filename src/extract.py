@@ -3,7 +3,7 @@ import os
 import boto3
 from jsonpointer import resolve_pointer as resolve
 from src.common.logger import logger
-from src.sources import meetup
+from src.sources import eventbrite, meetup
 from src.util.s3 import upload_to_s3
 
 s3 = boto3.client("s3")
@@ -14,17 +14,17 @@ EXTRACT_BUCKET = os.getenv("EXTRACT_BUCKET")
 def retrieved_events(sources):
     retrieved_events = []
     for source in sources:
+        location = resolve(source, "/location", None)
         type = source.get("type", None)
 
         if type == "meetup":
             member_id = resolve(source, "/meetup/member_id", None)
-            location = resolve(source, "/location", None)
-
             events = meetup.get_events_by_member(member_id)
+        elif type == "eventbrite":
+            events = eventbrite.get_events_by_location(location)
 
-            sourced_events = {"events": events, "type": type, "location": location}
-
-            retrieved_events.append(sourced_events)
+        sourced_events = {"events": events, "type": type, "location": location}
+        retrieved_events.append(sourced_events)
 
     return retrieved_events
 

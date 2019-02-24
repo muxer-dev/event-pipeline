@@ -1,7 +1,7 @@
 import datetime
 
 
-def transform_meetup(events, location):
+def transform(events, location):
     transformed_events = []
     for event in events:
         start = datetime.datetime.fromtimestamp(int(event["time"] / 1000)).strftime(
